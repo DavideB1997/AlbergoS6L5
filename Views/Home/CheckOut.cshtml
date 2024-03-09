@@ -1,0 +1,41 @@
+﻿
+@{
+    ViewBag.Title = "CheckOut";
+}
+
+<h2>CheckOut</h2>
+
+
+
+<h2>Seleziona il cliente:</h2>
+
+@using (Html.BeginForm("GetCheckOutData", "Home", FormMethod.Post))
+{
+
+
+    <select name="IdPrenotazione">
+        @foreach (var prenotazione in ViewBag.prenotazioneLista)
+        {
+            <option value="@prenotazione.IdPrenotazione">@prenotazione.IdPrenotazione - @prenotazione.Nome @prenotazione.Cognome</option>
+        }
+    </select>
+    <button type="submit">Visualizza Check-Out</button>
+}
+
+
+
+
+@if (ViewBag.checkOut != null)
+{
+    foreach (var var in ViewBag.checkOut)
+    {
+        <div>
+            <p>@var.Stanza</p>
+            <p>@var.SoggiornoFine</p>
+            <p>@var.SoggiornoInizio</p>
+            <p>@var.Tariffa</p>
+        </div>
+    }
+}
+
+

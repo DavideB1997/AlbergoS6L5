@@ -1,0 +1,72 @@
+﻿
+@{
+    ViewBag.Title = "PrenotazioneForm";
+}
+
+<h2>PrenotazioneForm</h2>
+
+@using (Html.BeginForm("AddPrenotazione", "Prenotazione", FormMethod.Post))
+{
+
+    // Cliente
+    @*<h2>Seleziona il cliente:</h2>
+        <select id="clienteSelect">
+            <option value="Null"></option>
+            @foreach (var var in ViewBag.privatoLista)
+            {
+                <option id="idClienteP" value="@var.CF">@var.Nome @var.Cognome</option>
+            }
+        </select>*@
+
+
+    //cliente
+
+        <label class="form-label" for="Nome">Nome</label>
+        <input class="form-control" type="text" id="Nome" name="Nome">
+
+        <label class="form-label" for="Cognome">Cognome</label>
+        <input class="form-control" type="text" id="Cognome" name="Cognome">
+
+        <label class="form-label" for="Citta">Citta</label>
+        <input class="form-control" type="text" id="Citta" name="Citta">
+
+        <label class="form-label" for="Provincia">Provincia</label>
+        <input class="form-control" type="text" id="Provincia" name="Provincia">
+
+        <label class="form-label" for="Email">Email</label>
+        <input class="form-control" type="email" id="Email" name="Email">
+
+        <label class="form-label" for="Telefono">Telefono</label>
+        <input class="form-control" type="text" id="Telefono" name="Telefono">
+
+        <label class="form-label" for="Cellulare">Cellulare</label>
+        <input class="form-control" type="text" id="Cellulare" name="Cellulare">
+
+        <label class="form-label" for="CF">Codice Fiscale</label>
+        <input class="form-control" type="text" id="CF" name="CF">
+
+
+
+    // prenotazione
+
+    <label class="form-label" for="SoggiornoInizio">SoggiornoInizio</label>
+    <input class="form-control" type="date" id="SoggiornoInizio" name="SoggiornoInizio">
+
+    <label class="form-label" for="SoggiornoFine">SoggiornoFine</label>
+    <input class="form-control" type="date" id="SoggiornoFine" name="SoggiornoFine">
+
+    <label class="form-label" for="Caparra">Caparra</label>
+    <input class="form-control" type="number" id="Caparra" name="Caparra">
+
+    <label class="form-label" for="Tariffa">Tariffa</label>
+    <input class="form-control" type="text" id="Tariffa" name="Tariffa">
+
+    <label class="form-label" for="Dettagli">Dettagli</label>
+    <input class="form-control" type="text" id="Dettagli" name="Dettagli">
+
+    <label class="form-label" for="IdCamera">IdCamera</label>
+    <input class="form-control" type="text" id="IdCamera" name="IdCamera">
+
+
+    <button type="submit" class="btn btn-primary">Invia</button>
+}

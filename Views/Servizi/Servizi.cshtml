@@ -1,0 +1,37 @@
+﻿
+@{
+    ViewBag.Title = "Servizi";
+}
+
+<h2>Servizi</h2>
+
+@using (Html.BeginForm("AddServizio", "Prenotazione", FormMethod.Post))
+{
+    // Cliente
+    <h2>Seleziona il cliente:</h2>
+        <select name="IdPrenotazione">
+            @foreach (var var in ViewBag.prenotazioneLista)
+            {
+                <option value="@var.IdPrenotazione"> @var.IdPrenotazione @var.Nome @var.Cognome</option>
+            }
+        </select>
+
+
+    // Servizio
+
+
+
+    // IdServizio
+    <h2>Seleziona il cliente:</h2>
+    <select name="IdServizio">
+        @foreach (var item in ViewBag.servizoLista)
+        {
+            <option value="@item.IdServizio">@item.IdServizio @item.Descrizione @item.Costo</option>
+        }
+    </select>
+
+    <label class="form-label" for="Quantita">Quantita</label>
+    <input class="form-control" type="number" id="Quantita" name="Quantita">
+
+    <button type="submit" class="btn btn-primary">Invia</button>
+}
