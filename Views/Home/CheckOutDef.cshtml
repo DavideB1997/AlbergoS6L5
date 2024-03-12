@@ -1,0 +1,45 @@
+﻿
+@{
+    ViewBag.Title = "CheckoutDef";
+}
+
+<h2>Totale : @ViewBag.Totale &euro;</h2>
+
+
+
+@using (Html.BeginForm("CheckOut", "Home", FormMethod.Post))
+{
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <h2>Dettagli Check-Out</h2>
+                @foreach (var item in ViewBag.CheckOut)
+                {
+                    <div class="card mb-3">
+                        <div class="card-body">
+                            <h5 class="card-title">Stanza: @item.Stanza</h5>
+                            <p class="card-text">Data di Arrivo: @item.SoggiornoInizio.ToShortDateString()</p>
+                            <p class="card-text">Data di Partenza: @item.SoggiornoFine.ToShortDateString()</p>
+                            <p class="card-text">Tariffa: @item.Tariffa</p>
+                        </div>
+                    </div>
+                }
+            </div>
+            <div class="col-md-6">
+                <h2>Servizi</h2>
+                @foreach (var item in ViewBag.Servizi)
+                {
+                    <div class="card mb-3">
+                        <div class="card-body">
+                            <h5 class="card-title">@item.Descrizione</h5>
+                            <p class="card-text">Quantità: @item.Quantita</p>
+                            <p class="card-text">Costo: @item.Costo</p>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+
+}
+

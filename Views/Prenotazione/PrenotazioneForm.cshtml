@@ -5,68 +5,84 @@
 
 <h2>PrenotazioneForm</h2>
 
-@using (Html.BeginForm("AddPrenotazione", "Prenotazione", FormMethod.Post))
+@using (Html.BeginForm("AddPrenotazione", "Prenotazione", FormMethod.Post, new { @class = "row g-3" }))
 {
+    <div class="col-md-6">
+        <h2>Informazioni Cliente</h2>
+        <div class="mb-3">
+            <label for="Nome" class="form-label">Nome</label>
+            <input type="text" class="form-control" id="Nome" name="Nome">
+        </div>
+        <div class="mb-3">
+            <label for="Cognome" class="form-label">Cognome</label>
+            <input type="text" class="form-control" id="Cognome" name="Cognome">
+        </div>
+        <div class="mb-3">
+            <label for="Citta" class="form-label">Città</label>
+            <input type="text" class="form-control" id="Citta" name="Citta">
+        </div>
+        <div class="mb-3">
+            <label for="Provincia" class="form-label">Provincia</label>
+            <input type="text" class="form-control" id="Provincia" name="Provincia">
+        </div>
+        <div class="mb-3">
+            <label for="Email" class="form-label">Email</label>
+            <input type="email" class="form-control" id="Email" name="Email">
+        </div>
+        <div class="mb-3">
+            <label for="Telefono" class="form-label">Telefono</label>
+            <input type="text" class="form-control" id="Telefono" name="Telefono">
+        </div>
+        <div class="mb-3">
+            <label for="Cellulare" class="form-label">Cellulare</label>
+            <input type="text" class="form-control" id="Cellulare" name="Cellulare">
+        </div>
+        <div class="mb-3">
+            <label for="CF" class="form-label">Codice Fiscale</label>
+            <input type="text" class="form-control" id="CF" name="CF">
+        </div>
+    </div>
 
-    // Cliente
-    @*<h2>Seleziona il cliente:</h2>
-        <select id="clienteSelect">
-            <option value="Null"></option>
-            @foreach (var var in ViewBag.privatoLista)
-            {
-                <option id="idClienteP" value="@var.CF">@var.Nome @var.Cognome</option>
-            }
-        </select>*@
+    <div class="col-md-6">
+        <h2>Dettagli Prenotazione</h2>
+        <div class="mb-3">
+            <label for="SoggiornoInizio" class="form-label">Soggiorno Inizio</label>
+            <input type="date" class="form-control" id="SoggiornoInizio" name="SoggiornoInizio">
+        </div>
+        <div class="mb-3">
+            <label for="SoggiornoFine" class="form-label">Soggiorno Fine</label>
+            <input type="date" class="form-control" id="SoggiornoFine" name="SoggiornoFine">
+        </div>
+        <div class="mb-3">
+            <label for="Caparra" class="form-label">Caparra</label>
+            <input type="number" class="form-control" id="Caparra" name="Caparra">
+        </div>
+        <div class="mb-3">
+            <label for="tariffa" class="form-label">Tariffa</label>
+            <select name="tariffa" id="tariffa" class="form-select">
+                <option value="Standard">Tariffa Standard</option>
+                <option value="Deluxe">Tariffa Deluxe</option>
+                <option value="Suite">Tariffa Suite</option>
+                <option value="Premium">Tariffa Premium</option>
+            </select>
+        </div>
+        <div class="mb-3">
+            <label for="Dettagli" class="form-label">Dettagli</label>
+            <input type="text" class="form-control" id="Dettagli" name="Dettagli">
+        </div>
+        <div class="mb-3">
+            <h2>Seleziona La Camera</h2>
+            <select id="IdCamera" name="IdCamera" class="form-select">
+                <option value="">Seleziona una camera</option>
+                @foreach (var camera in ViewBag.Camere)
+                {
+                    <option value="@camera.IdCamera">@camera.TipologiaCamera @camera.Descrizione @camera.Prezzo</option>
+                }
+            </select>
+        </div>
+    </div>
 
-
-    //cliente
-
-        <label class="form-label" for="Nome">Nome</label>
-        <input class="form-control" type="text" id="Nome" name="Nome">
-
-        <label class="form-label" for="Cognome">Cognome</label>
-        <input class="form-control" type="text" id="Cognome" name="Cognome">
-
-        <label class="form-label" for="Citta">Citta</label>
-        <input class="form-control" type="text" id="Citta" name="Citta">
-
-        <label class="form-label" for="Provincia">Provincia</label>
-        <input class="form-control" type="text" id="Provincia" name="Provincia">
-
-        <label class="form-label" for="Email">Email</label>
-        <input class="form-control" type="email" id="Email" name="Email">
-
-        <label class="form-label" for="Telefono">Telefono</label>
-        <input class="form-control" type="text" id="Telefono" name="Telefono">
-
-        <label class="form-label" for="Cellulare">Cellulare</label>
-        <input class="form-control" type="text" id="Cellulare" name="Cellulare">
-
-        <label class="form-label" for="CF">Codice Fiscale</label>
-        <input class="form-control" type="text" id="CF" name="CF">
-
-
-
-    // prenotazione
-
-    <label class="form-label" for="SoggiornoInizio">SoggiornoInizio</label>
-    <input class="form-control" type="date" id="SoggiornoInizio" name="SoggiornoInizio">
-
-    <label class="form-label" for="SoggiornoFine">SoggiornoFine</label>
-    <input class="form-control" type="date" id="SoggiornoFine" name="SoggiornoFine">
-
-    <label class="form-label" for="Caparra">Caparra</label>
-    <input class="form-control" type="number" id="Caparra" name="Caparra">
-
-    <label class="form-label" for="Tariffa">Tariffa</label>
-    <input class="form-control" type="text" id="Tariffa" name="Tariffa">
-
-    <label class="form-label" for="Dettagli">Dettagli</label>
-    <input class="form-control" type="text" id="Dettagli" name="Dettagli">
-
-    <label class="form-label" for="IdCamera">IdCamera</label>
-    <input class="form-control" type="text" id="IdCamera" name="IdCamera">
-
-
-    <button type="submit" class="btn btn-primary">Invia</button>
+    <div class="col-12">
+        <button type="submit" class="btn btn-primary">Invia</button>
+    </div>
 }

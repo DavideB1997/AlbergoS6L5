@@ -38,6 +38,33 @@ namespace AlbergoS6L5.Controllers
         {
             ViewBag.Message = "Pagina prenotazione";
 
+            List<Camera> camere = new List<Camera>();
+
+            using (var conn = new SqlConnection(connectionString))
+            {
+                conn.Open();
+
+                var command = new SqlCommand("SELECT * FROM Camere", conn);
+
+                using (var reader = command.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        var camera = new Camera()
+                        {
+                            IdCamera = (int)reader["IdCamera"],
+                            TipologiaCamera = reader["TipologiaCamera"].ToString(),
+                            Descrizione = reader["Descrizione"].ToString(),
+                            Prezzo = (int)reader["Prezzo"],
+                        };
+                        camere.Add(camera);
+                    }
+                }
+            }
+
+            ViewBag.Camere = camere;
+
+
             return View("~/Views/Prenotazione/PrenotazioneForm.cshtml");
         }
 
@@ -46,11 +73,13 @@ namespace AlbergoS6L5.Controllers
 
 
 
-        public ActionResult CheckOut(int? IdPrenotazione)
+        public ActionResult CheckOut(int IdPrenotazione)
         {
             int totale = 0;
 
-            PrenotazioneCheckOut pren = new PrenotazioneCheckOut();
+            ViewBag.Servizi = null;
+            ViewBag.CheckOut = null;
+            ViewBag.Totale = null;
 
             List<PrenotazioneCheckOut> checkOut = new List<PrenotazioneCheckOut>();
             List<Servizio> servizi = new List<Servizio>();
@@ -70,43 +99,37 @@ namespace AlbergoS6L5.Controllers
 
                 using (var reader = command.ExecuteReader())
                 {
-                    if (reader.Read())
+                    while (reader.Read())
                     {
-                        while (reader.Read())
+                        var pernCheckOut = new PrenotazioneCheckOut()
                         {
-                            var pernCheckOut = new PrenotazioneCheckOut()
-                            {
-                                SoggiornoFine = (DateTime)reader["SoggiornoFine"],
-                                SoggiornoInizio = (DateTime)reader["SoggiornoInizio"],
-                                Tariffa = reader["Tariffa"].ToString(),
-                                Stanza = (int)reader["IdCamera"],
+                            SoggiornoFine = (DateTime)reader["SoggiornoFine"],
+                            SoggiornoInizio = (DateTime)reader["SoggiornoInizio"],
+                            Tariffa = reader["Tariffa"].ToString(),
+                            Stanza = (int)reader["IdCamera"],
+                        };
 
-                            };
-
-                            checkOut.Add(pernCheckOut);
-                            totale += reader.GetInt32(reader.GetOrdinal("Caparra"));
-                        }
+                        checkOut.Add(pernCheckOut);
+                        totale += reader.GetInt32(reader.GetOrdinal("Caparra"));
                     }
                 }
 
                 using (var reader = comand.ExecuteReader())
                 {
-                    if (reader.Read())
+                    while (reader.Read())
                     {
-                        while (reader.Read())
+                        var serviziCheckOut = new Servizio()
                         {
-                            var serviziCheckOut = new Servizio()
-                            {
-                                Descrizione = reader["Descrizione"].ToString(),
-                                Quantita = (int)reader["Quantita"],
-                                Costo = (int)reader["Costo"],
-                            };
-                            totale += (reader.GetInt32(reader.GetOrdinal("Quantita")) * reader.GetInt32(reader.GetOrdinal("Costo")));
+                            Descrizione = reader["Descrizione"].ToString(),
+                            Quantita = (int)reader["Quantita"],
+                            Costo = (int)reader["Costo"],
+                        };
+                        totale += (reader.GetInt32(reader.GetOrdinal("Quantita")) * reader.GetInt32(reader.GetOrdinal("Costo")));
 
-                            servizi.Add(serviziCheckOut);
-                        }
+                        servizi.Add(serviziCheckOut);
                     }
                 }
+
 
                 cmd.Parameters.AddWithValue("@saldo", totale);
 
@@ -116,12 +139,13 @@ namespace AlbergoS6L5.Controllers
 
                 ViewBag.Servizi = servizi;
                 ViewBag.CheckOut = checkOut;
+                ViewBag.Totale = totale;
 
 
                 conn.Close();
             }
 
-            return View("~/Views/Home/CheckOut.cshtml");
+            return View("~/Views/Home/CheckOutDef.cshtml");
         }
 
 
@@ -129,7 +153,10 @@ namespace AlbergoS6L5.Controllers
 
 
 
-
+        public ActionResult Redirect(int IdPrenotazione)
+        {
+            return RedirectToAction("CheckOut", new { IdPrenotazione = IdPrenotazione });
+        }
 
 
 
@@ -168,19 +195,8 @@ namespace AlbergoS6L5.Controllers
             }
 
             ViewBag.prenotazioneLista = prenotazioneLista;
-
-            //return RedirectToAction("CheckOut", new { IdPrenotazione = IdPrenotazione });
             return View("~/Views/Home/CheckOut.cshtml");
-
         }
-
-
-        //public ActionResult startCheckOutData(int IdPrenotazione)
-        //{
-        //    return RedirectToAction("CheckOut", new { IdPrenotazione = IdPrenotazione });
-        //}
-
-
 
         public ActionResult Servizi()
         {

@@ -14,7 +14,7 @@ namespace AlbergoS6L5.Controllers
     {
         public static string connectionString = ConfigurationManager.ConnectionStrings["Albergo"].ToString();
 
-        
+
 
 
 
@@ -46,6 +46,7 @@ namespace AlbergoS6L5.Controllers
                 command.Parameters.Add("@email", SqlDbType.NVarChar).Value = cliente.Email;
                 command.Parameters.Add("@telefono", SqlDbType.NVarChar).Value = (object)cliente.Telefono ?? DBNull.Value;
                 command.Parameters.Add("@cellulare", SqlDbType.NVarChar).Value = cliente.Cellulare;
+
 
 
                 //// Ottiene l'ID appena inserito del cliente
@@ -102,7 +103,7 @@ namespace AlbergoS6L5.Controllers
                 conn.Close();
             }
 
-            return View();
+            return View("~/Views/Home/Index.cshtml");
         }
 
 

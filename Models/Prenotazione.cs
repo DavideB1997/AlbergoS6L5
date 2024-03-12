@@ -22,6 +22,8 @@ namespace AlbergoS6L5.Models
         public int IdCamera { get; set; }
 
         public int Saldo { get; set;}
+
+        public bool Pagato { get; set; }
     }
 
 
